@@ -31,11 +31,14 @@ import java.util.Scanner;
 // ║                                                                     ║
 // ║  [GRÁFICOS]                                                         ║
 // ║    [> HUD]             → mostrarHud(), mostrarStatus()              ║
-// ║    [> Arte ASCII]      → imprimirTituloBlooDivine(), mostrarSala() ║
+// ║    [> Arte ASCII]      → imprimirTituloBlooDivine(), mostrarSala()  ║
 // ║    [> Salas]                                                        ║
+// ║                                                                     ║
 // ║  [NARRADOR]                                                         ║
-// ║   [> Introdução]                                                    ║
-// ║   [> pos-batalha]                                                   ║
+// ║   [> Introdução]       → introducao()                               ║
+// ║   [> pos-batalha]      → pos_batalha()                              ║
+// ║   [> pre-batalha]      → pre_batalha()                              ║
+// ║                                                                     ║
 // ╚═════════════════════════════════════════════════════════════════════╝
 
 
