@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 // ╔═════════════════════════════════════════════════════════════════════╗
-// ║              BLOODDIVINE RPG — SUMÁRIO DO PROJETO                   ║
+// ║              BLOODIVINE RPG — SUMÁRIO DO PROJETO                   ║
 // ╠═════════════════════════════════════════════════════════════════════╣
 // ║  [MAIN]                → Ponto de entrada do programa               ║
 // ║                                                                     ║
@@ -31,7 +31,7 @@ import java.util.Scanner;
 // ║                                                                     ║
 // ║  [GRÁFICOS]                                                         ║
 // ║    [> HUD]             → mostrarHud(), mostrarStatus()              ║
-// ║    [> Arte ASCII]      → imprimirTituloBloodDivine(), mostrarSala() ║
+// ║    [> Arte ASCII]      → imprimirTituloBlooDivine(), mostrarSala() ║
 // ║    [> Salas]                                                        ║
 // ║  [NARRADOR]                                                         ║
 // ║   [> Introdução]                                                    ║
@@ -55,19 +55,23 @@ public class Main7 {
         Inimigo cavaleiroNegro = Inimigo.criar(Inimigos.CAVALEIRO_NEGRO);
         Inimigo reiDemonio     = Inimigo.criar(Inimigos.REI_DEMONIO);
 
-        digitar("🎮⚔️ " + Cores.NEGRITO + Cores.VERMELHO_FORTE + "BLOODDIVINE "
+        digitar("🎮⚔️ " + Cores.NEGRITO + Cores.VERMELHO_FORTE + "BLOODIVINE "
                 + Cores.AMARELO_FORTE + "INICIANDO... "
                 + Cores.CIANO_FORTE + "Prepare-se para a batalha! 🎮⚔️" + Cores.RESET);
-        Thread.sleep(3000);
+        Thread.sleep(1500);
+        introducao();
         if (!executarFase(player, esqueleto,      1, 1)) return;
+        pos_batalha_Esqueleto();
         if (!executarFase(player, goblin,         2, 2)) return;
+        pos_batalha_Goblin();
         if (!executarFase(player, demonio,        3, 3)) return;
+        pos_batalha_Demonio();
         if (!executarFase(player, cavaleiroNegro, 4, 4)) return;
+        pos_batalha_Cavaleiro_Negro();
         if (!executarFase(player, reiDemonio,     5, 5)) return;
 
         limparTela();
-        digitar(Cores.AMARELO_FORTE + "🏆 Você derrotou o Rei-Demônio e salvou o mundo!" + Cores.RESET);
-        digitar(Cores.CIANO_FORTE   + "★ BLOODDIVINE COMPLETO! Parabéns, herói! ★"       + Cores.RESET);
+        finalDoJogo();
 
         scan.close();
     }
@@ -278,14 +282,14 @@ public class Main7 {
         digitar("Bem-Vindo à história de");
         System.out.println();
         Thread.sleep(1000);
-        imprimirTituloBloodDivine();
+        imprimirTituloBlooDivine();
         Thread.sleep(1500);
         limparTelaDevagar();
 
-        digitar("Escolha sua classe no RPG de " + Cores.VERMELHO_FORTE + "BLOODDIVINE" + Cores.RESET);
+        digitar("Escolha sua classe no RPG de " + Cores.VERMELHO_FORTE + "BLOODIVINE" + Cores.RESET);
         System.out.println("1) ⚔️  " + ClassesRpg.formatado(ClassesRpg.GUERREIRO) + " — 100HP | 20ATK | 4 curas | Iniciativa média");
         System.out.println("2) 🗡️  " + ClassesRpg.formatado(ClassesRpg.ASSASSINO) + " — 90HP  | 25ATK | 3 curas | Alta iniciativa");
-        System.out.println("3) 🛡️  " + ClassesRpg.formatado(ClassesRpg.TANK)      + " — 150HP | 15ATK | 5 curas | Baixa iniciativa");
+        System.out.println("3) 🛡️  " + ClassesRpg.formatado(ClassesRpg.TANK)      + " — 150HP | 17ATK | 5 curas | Baixa iniciativa");
         System.out.print("Opção: ");
 
         String classe = opcaoParaClasse(lerOpcaoValida(1, 3));
@@ -481,7 +485,7 @@ public class Main7 {
 
     // [GRÁFICOS > Arte ASCII]
 
-    public static void imprimirTituloBloodDivine() {
+    public static void imprimirTituloBlooDivine() {
         String[] linhas = {
             "██████╗ ██╗      ██████╗  ██████╗ ██████╗ ██╗██╗   ██╗██╗███╗   ██╗███████╗",
             "██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗██║██║   ██║██║████╗  ██║██╔════╝",
@@ -539,9 +543,7 @@ public class Main7 {
                 }
                 entrarSala(1);
 
-                digitar("Os ossos da caverna começam a se juntar...              ");
-                digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.ESQUELETO + Cores.RESET + "!");
-                Thread.sleep(2200);
+                pre_batalha_esqueleto();
                 limparTelaDevagar();
             }
             case 2 -> {
@@ -556,10 +558,7 @@ public class Main7 {
                 }
                 entrarSala(2);
 
-                digitar("De uma silhueta escura se avista uma pele" + Cores.VERDE + " esverdeada..." + Cores.RESET);
-                Thread.sleep(450);
-                digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.GOBLIN + Cores.RESET + "!");
-                Thread.sleep(2200);
+                pre_batalha_goblin();
                 limparTelaDevagar();
             }
             case 3 -> {
@@ -574,10 +573,7 @@ public class Main7 {
                 }
                 entrarSala(3);
                 
-                digitar("Do teto escuro uma criatura de "+ Cores.NEGRITO + "asas negras " + Cores.RESET + "descem em sua direção...");
-                Thread.sleep(450);
-                digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.DEMONIO + Cores.RESET + "!");
-                Thread.sleep(2200);
+                pre_batalha_Demonio();
                 limparTelaDevagar();
             }
             case 4 -> {
@@ -592,12 +588,7 @@ public class Main7 {
                 }
                 entrarSala(4);
 
-                digitar("Ao centro de uma sala branca...");
-                Thread.sleep(200);
-                digitar("Uma figura imponente se ergue, vestida com uma" + Cores.NEGRITO + " armadura negra reluzente..." + Cores.RESET);
-                Thread.sleep(450);
-                digitar("O inimigo é o " + Cores.VERMELHO + Inimigos.CAVALEIRO_NEGRO + Cores.RESET + "!");
-                Thread.sleep(2200);
+                pre_batalha_Cavaleiro_Negro();
                 limparTelaDevagar();
             }
             case 5 -> {
@@ -611,12 +602,8 @@ public class Main7 {
                 apagar();}
                 entrarSala(5);
 
-                digitar("No trono de um castelo sombrio, o " + Cores.VERMELHO + "Rei Demônio" + Cores.RESET + " aguarda sua chegada...");
-                Thread.sleep(450);
-                digitar("O inimigo é o " + Cores.VERMELHO + Inimigos.REI_DEMONIO + Cores.RESET + "!");
-                Thread.sleep(450);
-                digitar("A batalha final se aproxima... Prepare-se para o desafio supremo! ⚔️👑");
-                Thread.sleep(2200);
+
+                pre_batalha_rei_demonio();
                 limparTelaDevagar();
             }
             default -> { System.out.println("ERRO! Número de sala inválido, apenas de 1 até 5");}
@@ -626,4 +613,139 @@ public class Main7 {
         // [NARRADOR]
 
         //[NARRADOR > Introdução]
+        public static void introducao() throws InterruptedException {
+            limparTela();
+            digitar("Há muitos séculos...");
+            Thread.sleep(2500);
+            digitar("os Cavaleiros Templários lutavam em nome da Igreja contra as forças do mal.");
+            Thread.sleep(1000);
+            digitar("Durante as guerras, a" + Cores.AMARELO_FORTE+ " Igreja do Calvário " + Cores.RESET + "foi destruída e o hoje permanece abandonada...");
+            Thread.sleep(2000);
+            digitar("Para purificar o templo, um nobre" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "adentra as escadarias da igreja...");
+            Thread.sleep(2000);
+        }
+
+        //[NARRADOR > Pre-Batalha]
+
+        public static void pre_batalha_esqueleto() throws InterruptedException {
+            limparTela();
+            digitar("O " + Cores.AZUL + "Cavaleiro" + Cores.RESET + ", imerso na escuridão...");
+            digitar("Acende uma tocha revelando ossos espalhados pela sala");
+            Thread.sleep(1000);
+            digitar("Ao som das gotas das paredes úmidas...                             ");
+            digitar("Os ossos da caverna começam a se juntar...                         ");
+            digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.ESQUELETO + Cores.RESET + "!");
+            Thread.sleep(2200);
+        }
+
+        public static void pre_batalha_goblin() throws InterruptedException {
+                digitar("De uma silhueta escura se avista uma pele" + Cores.VERDE + " esverdeada..." + Cores.RESET);
+                Thread.sleep(1000);
+                digitar("A figura ronda o " + Cores.AZUL + "Cavaleiro " + Cores.RESET + "pela escuridão esperando a melhor oportunidade de " + Cores.VERMELHO_FORTE + "ATACAR!" + Cores.RESET);
+                digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.GOBLIN + Cores.RESET + "!");
+                Thread.sleep(2200);
+        }
+
+        public static void pre_batalha_Demonio() throws InterruptedException {
+            limparTela();
+            digitar("As paredes de pedra mascadas com " + Cores.VERMELHO_FORTE + "sangue " + Cores.RESET + "revelam um convecionário");
+            Thread.sleep(2000);
+            digitar("No teto, um vulto, algo está se mexendo e muito rápido...");
+            Thread.sleep(1000);
+            digitar("Uma criatura de "+ Cores.NEGRITO + "asas negras " + Cores.RESET + "desce em sua direção                ");
+            Thread.sleep(1000);
+            digitar("O inimigo é um " + Cores.VERMELHO + Inimigos.DEMONIO + Cores.RESET + "!");
+            Thread.sleep(2200);
+        }
+
+        public static void pre_batalha_Cavaleiro_Negro() throws InterruptedException {
+            limparTela();
+            digitar("Ao centro de um grande salão iluminado por velas...");
+            Thread.sleep(1500);
+            digitar("Uma figura está posta ajoelhada em oração para uma grande imagem de" + Cores.AMARELO_FORTE + " Cristo" + Cores.RESET);
+            Thread.sleep(1000);
+            digitar("A figura imponente se ergue, vestida com uma" + Cores.NEGRITO + " armadura negra reluzente..." + Cores.RESET);
+            Thread.sleep(1500);
+            digitar("E com um único golpe");
+            digitar(Cores.VERMELHO + "Destroi a imagem " + Cores.RESET + "enfurecendo o" + Cores.AZUL + " Cavaleiro" + Cores.RESET);
+            Thread.sleep(2000);
+            digitar("O inimigo é o " + Cores.VERMELHO + Inimigos.CAVALEIRO_NEGRO + Cores.RESET + "!");
+            Thread.sleep(2200);
+        }
+
+        public static void pre_batalha_rei_demonio() throws InterruptedException {
+            limparTela();
+            digitar("Em instantes");
+            Thread.sleep(1000);
+            digitar("A escuridão que cobria a igreja...");
+            Thread.sleep(1500);
+            digitar(Cores.VERMELHO + "Foi tomada por um fogo" + Cores.RESET + " que envolvia um" + Cores.NEGRITO  + " Grande Trono Do Castelo Sombrio" + Cores.RESET);
+            Thread.sleep(2000);
+            digitar("De lá, o " + Cores.VERMELHO + "Rei Demônio" + Cores.RESET + " aguarda sua chegada...");
+            Thread.sleep(2200);
+            digitar("O inimigo é o " + Cores.VERMELHO + Inimigos.REI_DEMONIO + Cores.RESET + "!");
+            Thread.sleep(600);
+            digitar("Se prepare " + Cores.AMARELO_FORTE + "Cavaleiro" + Cores.RESET + "!");
+            digitar("A batalha final se aproxima... Este é o desafio supremo o desafio supremo!  ⚔️ 👑");
+            Thread.sleep(2200);
+        }
+
+
+        //[NARRADOR > Pos-Batalha]
+
+        public static void pos_batalha_Esqueleto() throws InterruptedException {
+            limparTela();
+            digitar("O " + Cores.VERMELHO + "ESQUELETO foi derrotado" + Cores.RESET);
+            Thread.sleep(1500);
+            digitar("Mas o que o " + Cores.AZUL +"Cavaleiro " + Cores.AZUL + "havia enfrentado de fato?");
+            digitar("Seria essa criatura fruto de sua " + Cores.NEGRITO + "imaginação..." + Cores.RESET);
+            Thread.sleep(1500);
+            digitar(Cores.NEGRITO + "Ele temia que não!" + Cores.RESET);
+            Thread.sleep(2500);
+        }
+
+        public static void pos_batalha_Goblin() throws InterruptedException {
+            limparTela();
+            digitar("O cravejar da lâmina do" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "ecoa como um último som antes do silencio...");
+            Thread.sleep(2000);
+            digitar("aquele silêncio deixava claro...");
+            Thread.sleep(1000);
+            digitar("A " + Cores.VERMELHO_FORTE + "Igreja do Calvário " + Cores.RESET + "era um templo " + Cores.NEGRITO + "das trevas " + Cores.RESET);
+            Thread.sleep(2200);
+        }
+
+        public static void pos_batalha_Demonio() throws InterruptedException {
+            limparTela();
+            digitar("O" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "sentia um aperto em seu coração");
+            Thread.sleep(1500);
+            digitar("Como poderam manchar o nome da" + Cores.AMARELO_FORTE + " Igreja" + Cores.RESET + "?" + " Ele se perguntava");
+            Thread.sleep(1500);
+            digitar("O" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "havia entendido o seu propósito...");
+            Thread.sleep(1500);
+            digitar(Cores.NEGRITO + "Limpar o legado da " + Cores.RESET + Cores.AMARELO_FORTE + "Igreja do Calvário " + Cores.RESET 
+            + Cores.NEGRITO + "\n e derrotar todas as criaturas profanas no templo!" + Cores.RESET);
+            Thread.sleep(3000);
+        }
+
+        public static void pos_batalha_Cavaleiro_Negro() throws InterruptedException {
+            limparTela();
+            digitar("O" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "atravessou a câmara em silêncio");
+            Thread.sleep(1500);
+            digitar("e continuou avançando pelas profundezas da antiga igreja...");
+            Thread.sleep(1500);
+            digitar("Mal sabia ele que um grande desafio o" + Cores.VERMELHO_FORTE + " aguardava na próxima sala" + Cores.RESET);
+            Thread.sleep(2500);
+        }
+
+        public static void finalDoJogo()  throws InterruptedException{
+            limparTela();
+            digitar(Cores.AMARELO_FORTE + "O Rei Demônio foi derrotado!" + Cores.RESET);
+            digitar(Cores.AMARELO_FORTE + "🏆 O mundo está a salvo!" + Cores.RESET);
+            Thread.sleep(1500);
+            digitar("O" + Cores.AZUL + " Cavaleiro " + Cores.RESET + "havia cumprido seu destino.");
+            Thread.sleep(1500);
+            digitar("Agora ele pode descansar em paz...");
+            Thread.sleep(1500);
+            digitar(Cores.CIANO_FORTE   + "★BLOODIVINE COMPLETO! Parabéns, herói! ★" + Cores.RESET);
+        }
  }
