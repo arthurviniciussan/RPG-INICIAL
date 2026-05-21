@@ -2,9 +2,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 // ╔═════════════════════════════════════════════════════════════════════╗
-// ║              BLOODIVINE RPG — SUMÁRIO DO PROJETO                   ║
+// ║              BLOODIVINE RPG — SUMÁRIO DO PROJETO                    ║
 // ╠═════════════════════════════════════════════════════════════════════╣
 // ║  [MAIN]                → Ponto de entrada do programa               ║
+// ║                                                                     ║
+// ║  [ADMIN]                                                            ║
 // ║                                                                     ║
 // ║  [UTILITÁRIOS]                                                      ║
 // ║    [> Console]         → digitar(), limparTela(), lerOpcaoValida()  ║
@@ -50,33 +52,164 @@ public class Main7 {
 
   // [MAIN]
     public static void main(String[] args) throws InterruptedException {
-        Player player = escolhaClasse();
+        Player player = new Player();
+        Inimigo inimigo = new Inimigo();
+        while(true) {
+            System.out.println("1 - Jogar Normal");
+            System.out.println("2 - Modo Admin");
+            System.out.println("3 - Sair");
 
-        Inimigo esqueleto      = Inimigo.criar(Inimigos.ESQUELETO);
-        Inimigo goblin         = Inimigo.criar(Inimigos.GOBLIN);
-        Inimigo demonio        = Inimigo.criar(Inimigos.DEMONIO);
-        Inimigo cavaleiroNegro = Inimigo.criar(Inimigos.CAVALEIRO_NEGRO);
-        Inimigo reiDemonio     = Inimigo.criar(Inimigos.REI_DEMONIO);
+            int modo = lerOpcaoValida(1, 3);
+            if (modo == 2) {
+                if(admin()) {
+                    System.out.println("✅ Você entrou no modo admin");
+                    Thread.sleep(1500);
+                } else {
+                    System.out.println("❌ Senha incorreta");
+                    return;
+                }
+                player = criarPlayerAdmin();
+                escolherinimigo(player, inimigo);
+                return;
+            }
+            else if (modo == 1) {
+                jogoNormal(player);
+            }
+            else  {
+                break;
+            }
+        }
+    }
 
-        digitar("🎮⚔️ " + Cores.NEGRITO + Cores.VERMELHO_FORTE + "BLOODIVINE "
+    // [ADMIN]
+
+     public static boolean admin(){
+        System.out.println("Digite sua senha");
+
+        String senha = scan.next();
+
+        return senha.equals("admin12");
+    }
+
+    public static Player criarPlayerAdmin() throws InterruptedException {
+
+        Player player = null;
+
+        while (true) {
+            limparTela();
+            System.out.println("===== MODO ADMIN =====");
+            System.out.println("Escolha sua classe");
+            System.out.println(Cores.NEGRITO + Cores.VERMELHO_FORTE + "1) GUERREIRO" + Cores.RESET);
+            System.out.println(Cores.NEGRITO + Cores.ROXO + "2) ASSASSINO" + Cores.RESET);
+            System.out.println(Cores.NEGRITO + Cores.AZUL + "3) TANK" + Cores.RESET);
+
+            int escolha = lerOpcaoValida(1, 3);
+            switch (escolha) {
+                case 1:
+                    player = Player.criar(ClassesRpg.GUERREIRO);break;
+                case 2:
+                    player = Player.criar(ClassesRpg.ASSASSINO);break;
+                case 3:
+                    player = Player.criar(ClassesRpg.TANK);break;
+                default:
+                    System.out.println("Classe invalida!");
+                    return Player.criar(ClassesRpg.GUERREIRO); // Define automaticamente como GUERREIRO
+            }
+            break;
+        }
+        limparTela();
+
+        System.out.println("=== EDITAR STATUS ===");
+
+        System.out.println("Vida: ");
+        player.vida = lerOpcaoValida(1, 999);
+        player.vidaMax = player.vida;
+
+        System.out.println("Dano: ");
+        player.dano = lerOpcaoValida(1, 999);
+
+        System.out.println("Quantidade de Cura: ");
+        player.quantidadeCura  = lerOpcaoValida(1, 999);
+        limparTela();
+
+        System.out.println(Cores.AZUL + "SUA CLASSE FOI CRIADA" + Cores.RESET);
+
+        System.out.println(Cores.VERDE + "Vida: " + player.vida + Cores.RESET);
+        System.out.println(Cores.VERMELHO + "Dano: " + player.dano + Cores.RESET);
+        System.out.println(Cores.AZUL + "Cura: " + player.cura + Cores.RESET);
+        limparTela();
+        return player;
+    }
+
+    public static void escolherinimigo(Player player, Inimigo inimigo) throws InterruptedException{
+
+        while (true) {
+            System.out.println("Escolha o inimigo:");
+            System.out.println(Cores.VERMELHO + "1) ESQUELETO" + Cores.RESET);
+            System.out.println(Cores.VERMELHO +"2) GOBLIN" + Cores.RESET);
+            System.out.println(Cores.VERMELHO +"3) DEMONIO" + Cores.RESET);
+            System.out.println(Cores.VERMELHO +"4) CAVALEIRO NEGRO" + Cores.RESET);
+            System.out.println(Cores.VERMELHO_FORTE +"5) REI DEMONIO" + Cores.RESET);
+            System.out.println(Cores.NEGRITO +"6) SAIR" + Cores.RESET);
+
+            int escolha = lerOpcaoValida(1, 6);
+            switch (escolha) {
+                case 1:
+                    inimigo = Inimigo.criar(Inimigos.ESQUELETO);
+                    executarFase(player, inimigo, escolha, escolha);
+                    break;
+                case 2:
+                    inimigo = Inimigo.criar(Inimigos.GOBLIN);
+                    executarFase(player, inimigo, escolha, escolha);
+                    break;
+                case 3:
+                    inimigo = Inimigo.criar(Inimigos.DEMONIO);
+                    executarFase(player, inimigo, escolha, escolha);
+                    break;
+                case 4:
+                    inimigo = Inimigo.criar(Inimigos.CAVALEIRO_NEGRO);
+                    executarFase(player, inimigo, escolha, escolha);
+                    break;
+                case 5:
+                    inimigo = Inimigo.criar(Inimigos.REI_DEMONIO);
+                    executarFase(player, inimigo, escolha, escolha);
+                    break;
+                default:
+                    limparTela();
+                    return;
+                    
+            }
+            limparTela();
+        }
+    }
+
+    public static void jogoNormal(Player player) throws InterruptedException {
+                player = escolhaClasse();
+                Inimigo esqueleto      = Inimigo.criar(Inimigos.ESQUELETO);
+                Inimigo goblin         = Inimigo.criar(Inimigos.GOBLIN);
+                Inimigo demonio        = Inimigo.criar(Inimigos.DEMONIO);
+                Inimigo cavaleiroNegro = Inimigo.criar(Inimigos.CAVALEIRO_NEGRO);
+                Inimigo reiDemonio     = Inimigo.criar(Inimigos.REI_DEMONIO);
+
+                digitar("🎮⚔️ " + Cores.NEGRITO + Cores.VERMELHO_FORTE + "BLOODIVINE "
                 + Cores.AMARELO_FORTE + "INICIANDO... "
                 + Cores.CIANO_FORTE + "Prepare-se para a batalha! 🎮⚔️" + Cores.RESET);
-        Thread.sleep(1500);
-        introducao();
-        if (!executarFase(player, esqueleto,      1, 1)) return;
-        pos_batalha_Esqueleto();
-        if (!executarFase(player, goblin,         2, 2)) return;
-        pos_batalha_Goblin();
-        if (!executarFase(player, demonio,        3, 3)) return;
-        pos_batalha_Demonio();
-        if (!executarFase(player, cavaleiroNegro, 4, 4)) return;
-        pos_batalha_Cavaleiro_Negro();
-        if (!executarFase(player, reiDemonio,     5, 5)) return;
+                Thread.sleep(1500);
+                introducao();
+                if (!executarFase(player, esqueleto,      1, 1)) return;
+                pos_batalha_Esqueleto();
+                if (!executarFase(player, goblin,         2, 2)) return;
+                pos_batalha_Goblin();
+                if (!executarFase(player, demonio,        3, 3)) return;
+                pos_batalha_Demonio();
+                if (!executarFase(player, cavaleiroNegro, 4, 4)) return;
+                pos_batalha_Cavaleiro_Negro();
+                if (!executarFase(player, reiDemonio,     5, 5)) return;
 
-        limparTela();
-        finalDoJogo();
+                limparTela();
+                finalDoJogo();
 
-        scan.close();
+                scan.close();
     }
 
 
