@@ -38,8 +38,8 @@ import java.util.Scanner;
 // ║                                                                     ║
 // ║  [NARRADOR]                                                         ║
 // ║   [> Introdução]       → introducao()                               ║
-// ║   [> pos-batalha]      → pos_batalha()                              ║
-// ║   [> pre-batalha]      → pre_batalha()                              ║
+// ║   [> Pos-batalha]      → pos_batalha()                              ║
+// ║   [> Pre-batalha]      → pre_batalha()                              ║
 // ║                                                                     ║
 // ║  [ADMIN]               → admin(), criarPlayerAdmin()                ║
 // ║                        → escolherinimigo(), jogoNormal()            ║
